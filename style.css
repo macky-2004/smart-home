@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NAMMAVEEDU SMART - PREMIUM NEUMORPHIC DESIGN SYSTEM (PASS-1 VISUAL UPGRADE)
+   NAMMAVEEDU SMART - PREMIUM NEUMORPHIC DESIGN SYSTEM (PASS-2 LAYOUT & IMAGES)
    ========================================================================== */
 
 /* --- 1. Global Variables & Design Tokens --- */
@@ -113,6 +113,16 @@ p {
     letter-spacing: -0.01em;
 }
 
+/* Section Ambient Depth Dividers (Pass-2 Step 6) */
+section {
+    position: relative;
+}
+
+section + section {
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 0 rgba(165, 180, 203, 0.12);
+}
+
 /* Accessibility Focus States */
 a:focus-visible, 
 button:focus-visible,
@@ -148,7 +158,7 @@ button:focus-visible,
 
 h2 {
     font-size: clamp(2rem, 3.5vw, 2.85rem);
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.025em;
     margin-bottom: var(--space-20);
     color: var(--text-primary);
@@ -432,13 +442,14 @@ h2 {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    background: radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.6) 0%, rgba(235, 240, 245, 0) 60%);
 }
 
 .hero-container {
     max-width: 1280px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.15fr 0.85fr;
     gap: var(--space-64);
     align-items: center;
     padding: 0 var(--space-32);
@@ -519,14 +530,14 @@ h1 {
     }
 }
 
-/* Image Frames System (#9) */
+/* Image Frames System (Pass-2 Step 2 & Step 6) */
 .hero-image-wrapper {
     width: 100%;
     height: 480px;
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-raised-lg);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.95);
     position: relative;
 }
 
@@ -641,6 +652,7 @@ h1 {
 /* --- 8. Statistics Section --- */
 .statistics-section {
     padding: var(--space-120) 0;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(235, 240, 245, 0) 70%);
 }
 
 .statistics-section h2 {
@@ -657,15 +669,18 @@ h1 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-32);
+    align-items: stretch;
 }
 
-/* Card System & Icon System (#7 & #8) */
+/* Card Arrangement & Equal Heights (Pass-2 Step 5) */
 .stat-card {
     padding: var(--space-36) var(--space-28);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
     border-radius: var(--radius-lg);
 }
 
@@ -739,6 +754,7 @@ h1 {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-32);
     margin-top: var(--space-56);
+    align-items: stretch;
 }
 
 .feature-card {
@@ -747,6 +763,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: 100%;
 }
 
 .feature-card:hover {
@@ -809,6 +826,7 @@ h1 {
 /* --- 10. Dashboard Section --- */
 .dashboard-section {
     padding: var(--space-120) 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.5) 0%, rgba(235, 240, 245, 0) 60%);
 }
 
 .dashboard-section h2, 
@@ -1014,14 +1032,14 @@ h1 {
     flex: 1;
 }
 
-/* Image Frame System (#9) */
+/* Image Frame System (Pass-2 Step 2 & Step 6) */
 .feature-visual {
     flex: 1;
     border-radius: var(--radius-xl);
     overflow: hidden;
     height: 400px;
     box-shadow: var(--shadow-raised-lg);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
 .feature-visual img {
@@ -1128,6 +1146,7 @@ h1 {
 /* --- 12. Tamil Nadu Homes Section --- */
 .tn-section {
     padding: var(--space-120) 0;
+    background: radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.45) 0%, rgba(235, 240, 245, 0) 65%);
 }
 
 .tn-grid {
@@ -1148,7 +1167,7 @@ h1 {
     overflow: hidden;
     height: 380px;
     box-shadow: var(--shadow-raised-lg);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
 .lifestyle-wrapper img {
@@ -1184,11 +1203,16 @@ h1 {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-24);
     margin: var(--space-32) 0;
+    align-items: stretch;
 }
 
 .benefit-card {
     padding: var(--space-28);
     border-radius: var(--radius-lg);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .benefit-card:hover {
@@ -1291,7 +1315,7 @@ h1 {
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-raised-lg);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
 .timeline-visual-card img {
@@ -1418,6 +1442,7 @@ h1 {
 .testimonials-section {
     padding: var(--space-120) 0;
     overflow: hidden;
+    background: radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.4) 0%, rgba(235, 240, 245, 0) 70%);
 }
 
 .carousel-container {
@@ -1432,6 +1457,7 @@ h1 {
     display: flex;
     gap: var(--space-32);
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    align-items: stretch;
 }
 
 .testimonial-card {
@@ -1442,6 +1468,8 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .testimonial-card:hover {
@@ -1454,7 +1482,7 @@ h1 {
     height: 84px;
     border-radius: 50%;
     margin-bottom: var(--space-16);
-    border: 3px solid rgba(255, 255, 255, 0.9);
+    border: 3px solid rgba(255, 255, 255, 0.95);
     object-fit: cover;
     box-shadow: var(--shadow-raised-sm);
 }
@@ -1612,6 +1640,7 @@ h1 {
 /* --- 16. Final CTA Section --- */
 .final-cta-section {
     padding: var(--space-120) 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.6) 0%, rgba(235, 240, 245, 0) 70%);
 }
 
 .cta-card {
@@ -1621,7 +1650,7 @@ h1 {
     text-align: center;
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-raised-lg);
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
 .cta-card h2 {
