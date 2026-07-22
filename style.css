@@ -2006,17 +2006,51 @@ button:focus-visible,
     justify-content: center;
     background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
     box-shadow: -5px -5px 12px rgba(255, 255, 255, 0.95), 5px 5px 14px rgba(165, 180, 203, 0.4);
-    color: var(--text-primary);
+    color: #1E293B !important;
     transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease, border-color 0.25s ease;
     text-decoration: none;
     border: 1.5px solid rgba(255, 255, 255, 0.95);
+    position: relative;
+    z-index: 5;
+}
+
+.social-links a i,
+.social-links a svg,
+.social-links a [data-lucide],
+.social-svg-icon,
+.social-svg-icon path,
+.social-svg-icon rect,
+.social-svg-icon circle,
+.social-svg-icon line {
+    width: 20px !important;
+    height: 20px !important;
+    color: #1E293B !important;
+    stroke: #1E293B !important;
+    stroke-width: 2px !important;
+    fill: none !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: color 0.25s ease, stroke 0.25s ease;
 }
 
 .social-links a:hover {
-    color: var(--accent-blue);
+    color: var(--accent-blue) !important;
     transform: translateY(-3px);
     box-shadow: -7px -7px 16px rgba(255, 255, 255, 1), 7px 7px 18px rgba(37, 99, 235, 0.28);
     border-color: rgba(255, 255, 255, 1);
+}
+
+.social-links a:hover i,
+.social-links a:hover svg,
+.social-links a:hover [data-lucide],
+.social-links a:hover .social-svg-icon,
+.social-links a:hover .social-svg-icon path,
+.social-links a:hover .social-svg-icon rect,
+.social-links a:hover .social-svg-icon circle,
+.social-links a:hover .social-svg-icon line {
+    color: var(--accent-blue) !important;
+    stroke: var(--accent-blue) !important;
 }
 
 .social-links a:active {
@@ -2027,11 +2061,6 @@ button:focus-visible,
 .social-links a:focus-visible {
     outline: 2px solid var(--accent-blue);
     outline-offset: 3px;
-}
-
-.social-links a i {
-    width: 20px;
-    height: 20px;
 }
 
 .footer-bottom {
@@ -2061,20 +2090,38 @@ button:focus-visible,
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 99;
+    z-index: 9999;
     opacity: 0;
     visibility: hidden;
     background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%) !important;
     box-shadow: -6px -6px 16px rgba(255, 255, 255, 1), 6px 6px 20px rgba(165, 180, 203, 0.45) !important;
-    color: var(--text-primary) !important;
+    color: #1E293B !important;
     border: 2px solid rgba(255, 255, 255, 0.95) !important;
     transition: opacity var(--transition-normal), visibility var(--transition-normal), transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease;
     cursor: pointer;
 }
 
 .scroll-top.is-visible {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.scroll-top i,
+.scroll-top svg,
+.scroll-top [data-lucide],
+.scroll-top-svg,
+.scroll-top-svg path,
+.scroll-top-svg line {
+    width: 22px !important;
+    height: 22px !important;
+    color: #1E293B !important;
+    stroke: #1E293B !important;
+    stroke-width: 2.5px !important;
+    fill: none !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: color 0.25s ease, stroke 0.25s ease;
 }
 
 .scroll-top:hover {
@@ -2082,6 +2129,16 @@ button:focus-visible,
     box-shadow: -8px -8px 20px rgba(255, 255, 255, 1), 8px 8px 24px rgba(37, 99, 235, 0.3) !important;
     color: var(--accent-blue) !important;
     border-color: rgba(255, 255, 255, 1) !important;
+}
+
+.scroll-top:hover i,
+.scroll-top:hover svg,
+.scroll-top:hover [data-lucide],
+.scroll-top:hover .scroll-top-svg,
+.scroll-top:hover .scroll-top-svg path,
+.scroll-top:hover .scroll-top-svg line {
+    color: var(--accent-blue) !important;
+    stroke: var(--accent-blue) !important;
 }
 
 .scroll-top:active {
