@@ -1,12 +1,13 @@
 /**
  * NammaVeedu Smart - Global Application Scripts
  * Premium Motion System & Interactive Application Logic
+ * Production Release Version (Pass-5 QA)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('NammaVeedu Smart premium landing page initialized.');
+    console.log('NammaVeedu Smart production landing page initialized.');
 
-    // 1. Initialize core UI components & Motion System
+    // Initialize core UI components & Motion System
     initLucideIcons();
     initMobileNavigation();
     initStatsCounter();
@@ -26,8 +27,7 @@ function initLucideIcons() {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     } else {
-        console.warn('Lucide library not loaded. Checking again in 500ms.');
-        setTimeout(initLucideIcons, 500);
+        setTimeout(initLucideIcons, 300);
     }
 }
 
@@ -59,7 +59,7 @@ function initMobileNavigation() {
         document.body.style.overflow = isExpanded ? 'auto' : 'hidden';
     });
 
-    // Close Menu when clicking a nav link (with smooth scroll delay)
+    // Close Menu when clicking a nav link
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
@@ -103,6 +103,15 @@ function initMobileNavigation() {
             }
         });
     }
+
+    // Auto-close mobile menu on window resize to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 991) {
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            navMenu.classList.remove('is-active');
+            document.body.style.overflow = 'auto';
+        }
+    });
 }
 
 /**
@@ -128,7 +137,7 @@ function initStatsCounter() {
                     const hasPlus = counter.innerText.includes('+');
                     let current = 0;
                     
-                    const step = target / 50; // duration of animation divided by intervals
+                    const step = target / 50;
                     const updateCount = () => {
                         current += step;
                         if (current < target) {
@@ -232,7 +241,6 @@ function initDashboard() {
     entranceObserver.observe(dashboardGrid);
 
     // 2. Individual Widget Toggle Operations
-    // Climate Toggle
     if (climateWidget && valClimate && subClimate && footClimate) {
         const temps = [
             { temp: '26°C', status: 'Comfortable', foot: 'Perfect for Everyday Living', active: false },
@@ -249,13 +257,14 @@ function initDashboard() {
             
             if (temps[tempIndex].active) {
                 climateWidget.classList.add('is-active-widget');
+                climateWidget.setAttribute('aria-pressed', 'true');
             } else {
                 climateWidget.classList.remove('is-active-widget');
+                climateWidget.setAttribute('aria-pressed', 'false');
             }
         });
     }
 
-    // Lighting Toggle
     if (lightingWidget && valLighting && subLighting && footLighting) {
         const lightingStates = [
             { val: '4 Zones Active', sub: 'Living Room: On | Kitchen: Off', foot: 'Bedroom: On | Garden: Scheduled', active: true },
@@ -271,59 +280,58 @@ function initDashboard() {
             
             if (lightingStates[lightIndex].active) {
                 lightingWidget.classList.add('is-active-widget');
+                lightingWidget.setAttribute('aria-pressed', 'true');
             } else {
                 lightingWidget.classList.remove('is-active-widget');
+                lightingWidget.setAttribute('aria-pressed', 'false');
             }
         });
     }
 
-    // Door Lock Toggle
     if (lockWidget && valLock && subLock && footLock) {
         lockWidget.addEventListener('click', () => {
             const isLocked = valLock.innerText.includes('Locked');
             if (isLocked) {
-                // Unlock
                 valLock.innerText = 'Unlocked (Alert)';
                 subLock.innerText = 'Unlocked Just Now';
                 footLock.innerText = 'Attention Required';
                 lockWidget.classList.remove('status-safe');
                 lockWidget.classList.add('status-warning');
                 lockWidget.classList.add('is-active-widget');
+                lockWidget.setAttribute('aria-pressed', 'true');
                 updateIcon(lockWidget, 'lock-open');
-                valStatusText.innerText = 'Front door unlocked. Safety notification dispatched.';
+                if (valStatusText) valStatusText.innerText = 'Front door unlocked. Safety notification dispatched.';
             } else {
-                // Lock
                 valLock.innerText = 'Securely Locked';
                 subLock.innerText = 'Locked 1 Minute Ago';
                 footLock.innerText = 'Remote Access Enabled';
                 lockWidget.classList.add('status-safe');
                 lockWidget.classList.remove('status-warning');
                 lockWidget.classList.remove('is-active-widget');
+                lockWidget.setAttribute('aria-pressed', 'false');
                 updateIcon(lockWidget, 'lock');
-                valStatusText.innerText = 'Front door successfully locked. All entries secured.';
+                if (valStatusText) valStatusText.innerText = 'Front door successfully locked. All entries secured.';
             }
         });
     }
 
-    // Water Pump Toggle
     if (waterWidget && valWater && subWater && footWater) {
         waterWidget.addEventListener('click', () => {
             const isRunning = subWater.innerText.includes('Running');
             if (isRunning) {
-                // Turn off
                 subWater.innerText = 'Pump: Auto (Idle)';
                 footWater.innerText = 'No Overflow Detected';
                 waterWidget.classList.remove('is-active-widget');
+                waterWidget.setAttribute('aria-pressed', 'false');
             } else {
-                // Turn on
                 subWater.innerText = 'Pump: Running Efficiently';
                 footWater.innerText = 'Filling Water Tank';
                 waterWidget.classList.add('is-active-widget');
+                waterWidget.setAttribute('aria-pressed', 'true');
             }
         });
     }
 
-    // Solar Power Toggle
     if (solarWidget && valSolar && subSolar && footSolar) {
         solarWidget.addEventListener('click', () => {
             const isStats = valSolar.innerText === '18.4 kWh';
@@ -332,16 +340,17 @@ function initDashboard() {
                 subSolar.innerText = 'Battery: 92% (Charging)';
                 footSolar.innerText = 'Direct Grid Contribution';
                 solarWidget.classList.add('is-active-widget');
+                solarWidget.setAttribute('aria-pressed', 'true');
             } else {
                 valSolar.innerText = '18.4 kWh';
                 subSolar.innerText = 'Battery: 92% Charged';
                 footSolar.innerText = 'Excellent Energy Production';
                 solarWidget.classList.remove('is-active-widget');
+                solarWidget.setAttribute('aria-pressed', 'false');
             }
         });
     }
 
-    // Camera Feed Toggle
     if (cameraWidget && valCamera && subCamera && footCamera) {
         cameraWidget.addEventListener('click', () => {
             const isNormal = valCamera.innerText === '4 Cameras Active';
@@ -350,16 +359,17 @@ function initDashboard() {
                 subCamera.innerText = 'Storage: 94% Free';
                 footCamera.innerText = 'Last Event: Doorbell (12m ago)';
                 cameraWidget.classList.add('is-active-widget');
+                cameraWidget.setAttribute('aria-pressed', 'true');
             } else {
                 valCamera.innerText = '4 Cameras Active';
                 subCamera.innerText = 'Motion: No Recent Activity';
                 footCamera.innerText = 'Monitoring in Progress';
                 cameraWidget.classList.remove('is-active-widget');
+                cameraWidget.setAttribute('aria-pressed', 'false');
             }
         });
     }
 
-    // Garden Irrigation Toggle
     if (gardenWidget && valGarden && subGarden && footGarden) {
         gardenWidget.addEventListener('click', () => {
             const isIrrigating = subGarden.innerText.includes('Watering');
@@ -368,16 +378,17 @@ function initDashboard() {
                 subGarden.innerText = 'Irrigation: Watering Now';
                 footGarden.innerText = 'System Cycle Running';
                 gardenWidget.classList.add('is-active-widget');
+                gardenWidget.setAttribute('aria-pressed', 'true');
             } else {
                 valGarden.innerText = 'Healthy';
                 subGarden.innerText = 'Irrigation: Scheduled for 6:00 AM';
                 footGarden.innerText = 'Plants Are Well Hydrated';
                 gardenWidget.classList.remove('is-active-widget');
+                gardenWidget.setAttribute('aria-pressed', 'false');
             }
         });
     }
 
-    // Energy Usage Toggle
     if (energyWidget && valEnergy && subEnergy && footEnergy) {
         energyWidget.addEventListener('click', () => {
             const isNormal = valEnergy.innerText === '18.7 kWh';
@@ -386,11 +397,13 @@ function initDashboard() {
                 subEnergy.innerText = 'Peak Grid Load: 1.4 kW';
                 footEnergy.innerText = 'Optimized Tariffs Active';
                 energyWidget.classList.add('is-active-widget');
+                energyWidget.setAttribute('aria-pressed', 'true');
             } else {
                 valEnergy.innerText = '18.7 kWh';
                 subEnergy.innerText = 'Savings: 17% Lower';
                 footEnergy.innerText = 'Great Energy Efficiency';
                 energyWidget.classList.remove('is-active-widget');
+                energyWidget.setAttribute('aria-pressed', 'false');
             }
         });
     }
@@ -400,7 +413,6 @@ function initDashboard() {
         btn.addEventListener('click', () => {
             const mode = btn.getAttribute('data-mode');
             
-            // Toggle active visual classes
             quickActionBtns.forEach(b => {
                 b.classList.remove('is-active');
                 b.setAttribute('aria-pressed', 'false');
@@ -408,10 +420,9 @@ function initDashboard() {
             btn.classList.add('is-active');
             btn.setAttribute('aria-pressed', 'true');
 
-            // Apply preset updates with cascading widget animations
             if (mode === 'sleep') {
-                valWelcome.innerText = 'Good Night';
-                valStatusText.innerText = 'Goodnight, Rajesh. Night scene activated. All doors secured.';
+                if (valWelcome) valWelcome.innerText = 'Good Night';
+                if (valStatusText) valStatusText.innerText = 'Goodnight, Rajesh. Night scene activated. All doors secured.';
                 
                 setTimeout(() => {
                     if (valClimate) valClimate.innerText = '24°C';
@@ -439,29 +450,9 @@ function initDashboard() {
                     }
                 }, 150);
 
-                setTimeout(() => {
-                    if (subWater) subWater.innerText = 'Pump: Auto (Idle)';
-                    if (footWater) footWater.innerText = 'No Overflow Detected';
-                    if (waterWidget) waterWidget.classList.remove('is-active-widget');
-                }, 200);
-
-                setTimeout(() => {
-                    if (valCamera) valCamera.innerText = '4 Cameras Active';
-                    if (subCamera) subCamera.innerText = 'Motion: Active Guard Armed';
-                    if (footCamera) footCamera.innerText = 'Armed & Monitoring';
-                    if (cameraWidget) cameraWidget.classList.add('is-active-widget');
-                }, 250);
-
-                setTimeout(() => {
-                    if (valGarden) valGarden.innerText = 'Healthy';
-                    if (subGarden) subGarden.innerText = 'Irrigation: Scheduled for 6:00 AM';
-                    if (footGarden) footGarden.innerText = 'Plants Are Well Hydrated';
-                    if (gardenWidget) gardenWidget.classList.remove('is-active-widget');
-                }, 300);
-
             } else if (mode === 'away') {
-                valWelcome.innerText = 'Away Mode Active';
-                valStatusText.innerText = 'System fully armed. Active monitoring enabled across 4 zones.';
+                if (valWelcome) valWelcome.innerText = 'Away Mode Active';
+                if (valStatusText) valStatusText.innerText = 'System fully armed. Active monitoring enabled across 4 zones.';
 
                 setTimeout(() => {
                     if (valClimate) valClimate.innerText = 'Eco (28°C)';
@@ -488,117 +479,13 @@ function initDashboard() {
                         updateIcon(lockWidget, 'lock');
                     }
                 }, 150);
-
-                setTimeout(() => {
-                    if (subWater) subWater.innerText = 'Pump: Auto (Idle)';
-                    if (footWater) footWater.innerText = 'No Overflow Detected';
-                    if (waterWidget) waterWidget.classList.remove('is-active-widget');
-                }, 200);
-
-                setTimeout(() => {
-                    if (valCamera) valCamera.innerText = '4 Cameras Active';
-                    if (subCamera) subCamera.innerText = 'Motion: AI Guard Armed';
-                    if (footCamera) footCamera.innerText = 'Armed & Monitoring';
-                    if (cameraWidget) cameraWidget.classList.add('is-active-widget');
-                }, 250);
-
-                setTimeout(() => {
-                    if (valGarden) valGarden.innerText = 'Healthy';
-                    if (subGarden) subGarden.innerText = 'Irrigation: Scheduled for 6:00 AM';
-                    if (footGarden) footGarden.innerText = 'Plants Are Well Hydrated';
-                    if (gardenWidget) gardenWidget.classList.remove('is-active-widget');
-                }, 300);
-
-            } else if (mode === 'vacation') {
-                valWelcome.innerText = 'Vacation Mode Active';
-                valStatusText.innerText = 'Home is secure. Solar exporting at peak efficiency. Enjoy your trip.';
-
-                setTimeout(() => {
-                    if (valClimate) valClimate.innerText = 'AC Deactivated';
-                    if (subClimate) subClimate.innerText = 'System Off';
-                    if (footClimate) footClimate.innerText = 'Eco Guard Active';
-                    if (climateWidget) climateWidget.classList.remove('is-active-widget');
-                }, 50);
-
-                setTimeout(() => {
-                    if (valLighting) valLighting.innerText = 'Simulated Presence';
-                    if (subLighting) subLighting.innerText = 'Schedules: Random Active';
-                    if (footLighting) footLighting.innerText = 'Vacation Mode Engaged';
-                    if (lightingWidget) lightingWidget.classList.add('is-active-widget');
-                }, 100);
-
-                setTimeout(() => {
-                    if (valLock) valLock.innerText = 'Securely Locked';
-                    if (subLock) subLock.innerText = 'Locked 3 Days Ago';
-                    if (footLock) footLock.innerText = 'Armed Guard Active';
-                    if (lockWidget) {
-                        lockWidget.classList.add('status-safe');
-                        lockWidget.classList.remove('status-warning');
-                        lockWidget.classList.remove('is-active-widget');
-                        updateIcon(lockWidget, 'lock');
-                    }
-                }, 150);
-
-                setTimeout(() => {
-                    if (subWater) subWater.innerText = 'Pump: Vacation Guard';
-                    if (footWater) footWater.innerText = 'Leak Sensors Active';
-                    if (waterWidget) waterWidget.classList.remove('is-active-widget');
-                }, 200);
-
-                setTimeout(() => {
-                    if (valSolar) valSolar.innerText = '18.4 kWh';
-                    if (subSolar) subSolar.innerText = 'Battery: 100% Charged';
-                    if (footSolar) footSolar.innerText = '100% Exporting to Grid';
-                    if (solarWidget) solarWidget.classList.add('is-active-widget');
-                }, 250);
-
-                setTimeout(() => {
-                    if (valCamera) valCamera.innerText = '4 Cameras Active';
-                    if (subCamera) subCamera.innerText = 'Motion: AI Guard Armed';
-                    if (footCamera) footCamera.innerText = 'Armed & Monitoring';
-                    if (cameraWidget) cameraWidget.classList.add('is-active-widget');
-                }, 300);
-
-                setTimeout(() => {
-                    if (valGarden) valGarden.innerText = 'Healthy';
-                    if (subGarden) subGarden.innerText = 'Irrigation: Smart Eco Cycle';
-                    if (footGarden) footGarden.innerText = 'Water Saving Schedule Active';
-                    if (gardenWidget) gardenWidget.classList.remove('is-active-widget');
-                }, 350);
-
-            } else if (mode === 'lightsoff') {
-                valWelcome.innerText = 'Lighting Panel';
-                valStatusText.innerText = 'All connected lighting zones deactivated successfully.';
-
-                setTimeout(() => {
-                    if (valLighting) valLighting.innerText = 'All Zones Off';
-                    if (subLighting) subLighting.innerText = 'No Active Zones';
-                    if (footLighting) footLighting.innerText = 'All Zones Deactivated';
-                    if (lightingWidget) lightingWidget.classList.remove('is-active-widget');
-                }, 50);
-
-            } else if (mode === 'emergencylock') {
-                valWelcome.innerText = 'Emergency Lock Engaged';
-                valStatusText.innerText = 'All external door locks forced closed. Emergency protocol active.';
-
-                setTimeout(() => {
-                    if (valLock) valLock.innerText = 'Securely Locked';
-                    if (subLock) subLock.innerText = 'Forced Lock Engaged';
-                    if (footLock) footLock.innerText = 'All Access Points Sealed';
-                    if (lockWidget) {
-                        lockWidget.classList.add('status-safe');
-                        lockWidget.classList.remove('status-warning');
-                        lockWidget.classList.add('is-active-widget');
-                        updateIcon(lockWidget, 'lock');
-                    }
-                }, 50);
             }
         });
     });
 }
 
 /**
- * Responsive Testimonials Carousel
+ * Responsive Testimonials Carousel with Touch Swipe Support
  */
 function initTestimonialsCarousel() {
     const track = document.getElementById('testimonialTrack');
@@ -616,18 +503,19 @@ function initTestimonialsCarousel() {
         return firstCard.offsetWidth;
     };
 
-    const isDesktop = () => {
-        return window.innerWidth >= 992;
-    };
+    const isDesktop = () => window.innerWidth >= 992;
+    const isTablet = () => window.innerWidth >= 640 && window.innerWidth < 992;
 
     const slide = () => {
         const width = getSlideWidth();
-        const gap = 32; // gap size defined in CSS
+        const gap = 24;
         track.style.transform = `translateX(-${index * (width + gap)}px)`;
     };
 
     const getMaxIndex = () => {
-        return isDesktop() ? track.children.length - 3 : track.children.length - 1;
+        if (isDesktop()) return track.children.length - 3;
+        if (isTablet()) return track.children.length - 2;
+        return track.children.length - 1;
     };
 
     const nextSlide = () => {
@@ -635,7 +523,7 @@ function initTestimonialsCarousel() {
         if (index < max) {
             index++;
         } else {
-            index = 0; // Wrap around
+            index = 0;
         }
         slide();
     };
@@ -645,7 +533,7 @@ function initTestimonialsCarousel() {
         if (index > 0) {
             index--;
         } else {
-            index = max; // Wrap around
+            index = max;
         }
         slide();
     };
@@ -660,6 +548,26 @@ function initTestimonialsCarousel() {
         resetAutoSlide();
     });
 
+    // Touch Swipe Support for Touch Devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const swipeThreshold = 40;
+        if (touchStartX - touchEndX > swipeThreshold) {
+            nextSlide();
+            resetAutoSlide();
+        } else if (touchEndX - touchStartX > swipeThreshold) {
+            prevSlide();
+            resetAutoSlide();
+        }
+    }, { passive: true });
+
     const startAutoSlide = () => {
         autoSlideInterval = setInterval(nextSlide, 5500);
     };
@@ -669,7 +577,6 @@ function initTestimonialsCarousel() {
         startAutoSlide();
     };
 
-    // Auto-slide starts on load
     startAutoSlide();
 
     track.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
@@ -679,7 +586,7 @@ function initTestimonialsCarousel() {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            index = 0; // reset slide index to prevent layout drift
+            index = 0;
             slide();
         }, 150);
     });
@@ -716,8 +623,6 @@ function initFaqAccordion() {
         if (!isOpen && answerPanel) {
             btn.setAttribute('aria-expanded', 'true');
             answerPanel.setAttribute('aria-hidden', 'false');
-            
-            // Set dynamic height using scrollHeight
             answerPanel.style.maxHeight = (answerPanel.scrollHeight + 24) + 'px';
             answerPanel.style.paddingBottom = '24px';
         }
@@ -748,7 +653,7 @@ function initScrollToTop() {
 }
 
 /**
- * PASS-3 STEP 3: Hero Page Load Animation (Staggered Entrance)
+ * Hero Page Load Animation
  */
 function initPageLoadAnimation() {
     const heroElements = [
@@ -770,10 +675,9 @@ function initPageLoadAnimation() {
 }
 
 /**
- * PASS-3 STEP 4: Universal Scroll Reveal System
+ * Universal Scroll Reveal System
  */
 function initScrollReveal() {
-    // Check prefers-reduced-motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         return;
     }
@@ -808,7 +712,6 @@ function initScrollReveal() {
         }
     });
 
-    // Group cards within grids for staggered entrance
     const grids = document.querySelectorAll('.stats-grid, .features-grid, .tn-benefits-grid, .timeline-grid-list, .carousel-track');
     grids.forEach(grid => {
         const children = grid.children;
@@ -834,7 +737,7 @@ function initScrollReveal() {
 }
 
 /**
- * PASS-3 STEP 9: Navigation Scroll Spy & Active State Highlight
+ * Navigation Scroll Spy & Active State Highlight
  */
 function initScrollSpy() {
     const sections = document.querySelectorAll('section[id], footer[id]');
