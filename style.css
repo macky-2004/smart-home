@@ -1981,6 +1981,8 @@ button:focus-visible,
 
 .social-links-container {
     margin-top: var(--space-24);
+    opacity: 1 !important;
+    transform: none !important;
 }
 
 .social-links-container h5 {
@@ -1993,6 +1995,8 @@ button:focus-visible,
 .social-links {
     display: flex;
     gap: var(--space-14);
+    opacity: 1 !important;
+    transform: none !important;
 }
 
 .social-links a {
@@ -2006,7 +2010,10 @@ button:focus-visible,
     justify-content: center;
     background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
     box-shadow: -5px -5px 12px rgba(255, 255, 255, 0.95), 5px 5px 14px rgba(165, 180, 203, 0.4);
-    color: #1E293B !important;
+    color: #1e293b !important;
+    fill: #1e293b !important;
+    opacity: 1 !important;
+    visibility: visible !important;
     transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease, border-color 0.25s ease;
     text-decoration: none;
     border: 1.5px solid rgba(255, 255, 255, 0.95);
@@ -2014,42 +2021,44 @@ button:focus-visible,
     z-index: 5;
 }
 
-.social-links a i,
 .social-links a svg,
+.social-links a i,
 .social-links a [data-lucide],
-.social-svg-icon,
-.social-svg-icon path,
-.social-svg-icon rect,
-.social-svg-icon circle,
-.social-svg-icon line {
+.social-svg-icon {
     width: 20px !important;
     height: 20px !important;
-    color: #1E293B !important;
-    stroke: #1E293B !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    color: #1e293b !important;
+    fill: #1e293b !important;
+    stroke: #1e293b !important;
     stroke-width: 2px !important;
-    fill: none !important;
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
-    transition: color 0.25s ease, stroke 0.25s ease;
+}
+
+.social-links a svg *,
+.social-svg-icon * {
+    color: #1e293b !important;
+    fill: #1e293b !important;
+    stroke: #1e293b !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .social-links a:hover {
     color: var(--accent-blue) !important;
+    fill: var(--accent-blue) !important;
     transform: translateY(-3px);
     box-shadow: -7px -7px 16px rgba(255, 255, 255, 1), 7px 7px 18px rgba(37, 99, 235, 0.28);
     border-color: rgba(255, 255, 255, 1);
 }
 
-.social-links a:hover i,
-.social-links a:hover svg,
-.social-links a:hover [data-lucide],
-.social-links a:hover .social-svg-icon,
-.social-links a:hover .social-svg-icon path,
-.social-links a:hover .social-svg-icon rect,
-.social-links a:hover .social-svg-icon circle,
-.social-links a:hover .social-svg-icon line {
+.social-links a:hover svg *,
+.social-links a:hover .social-svg-icon * {
     color: var(--accent-blue) !important;
+    fill: var(--accent-blue) !important;
     stroke: var(--accent-blue) !important;
 }
 
@@ -2077,7 +2086,7 @@ button:focus-visible,
     color: var(--text-muted);
 }
 
-/* Scroll to Top Button (PASS-5 Final Micro Fix: Enhanced High-Contrast Visibility) */
+/* BUG 3: Back to Top Floating Button */
 .scroll-top {
     position: fixed;
     bottom: 24px;
@@ -2090,12 +2099,13 @@ button:focus-visible,
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
+    z-index: 9999 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
     background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%) !important;
     box-shadow: -6px -6px 16px rgba(255, 255, 255, 1), 6px 6px 20px rgba(165, 180, 203, 0.45) !important;
-    color: #1E293B !important;
+    color: #1e293b !important;
+    fill: #1e293b !important;
     border: 2px solid rgba(255, 255, 255, 0.95) !important;
     transition: opacity var(--transition-normal), visibility var(--transition-normal), transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease;
     cursor: pointer;
@@ -2106,38 +2116,44 @@ button:focus-visible,
     visibility: visible !important;
 }
 
-.scroll-top i,
 .scroll-top svg,
+.scroll-top i,
 .scroll-top [data-lucide],
-.scroll-top-svg,
-.scroll-top-svg path,
-.scroll-top-svg line {
+.scroll-top-svg {
     width: 22px !important;
     height: 22px !important;
-    color: #1E293B !important;
-    stroke: #1E293B !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    color: #1e293b !important;
+    fill: #1e293b !important;
+    stroke: #1e293b !important;
     stroke-width: 2.5px !important;
-    fill: none !important;
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
-    transition: color 0.25s ease, stroke 0.25s ease;
+}
+
+.scroll-top svg *,
+.scroll-top-svg * {
+    color: #1e293b !important;
+    fill: #1e293b !important;
+    stroke: #1e293b !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .scroll-top:hover {
     transform: translateY(-4px) !important;
     box-shadow: -8px -8px 20px rgba(255, 255, 255, 1), 8px 8px 24px rgba(37, 99, 235, 0.3) !important;
     color: var(--accent-blue) !important;
+    fill: var(--accent-blue) !important;
     border-color: rgba(255, 255, 255, 1) !important;
 }
 
-.scroll-top:hover i,
-.scroll-top:hover svg,
-.scroll-top:hover [data-lucide],
-.scroll-top:hover .scroll-top-svg,
-.scroll-top:hover .scroll-top-svg path,
-.scroll-top:hover .scroll-top-svg line {
+.scroll-top:hover svg *,
+.scroll-top:hover .scroll-top-svg * {
     color: var(--accent-blue) !important;
+    fill: var(--accent-blue) !important;
     stroke: var(--accent-blue) !important;
 }
 
