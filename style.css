@@ -2004,18 +2004,29 @@ button:focus-visible,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--elevated-color), var(--surface-color));
-    box-shadow: var(--shadow-raised-sm);
-    color: var(--text-secondary);
-    transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease;
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
+    box-shadow: -5px -5px 12px rgba(255, 255, 255, 0.95), 5px 5px 14px rgba(165, 180, 203, 0.4);
+    color: var(--text-primary);
+    transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease, border-color 0.25s ease;
     text-decoration: none;
-    border: var(--border-light);
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
 }
 
 .social-links a:hover {
     color: var(--accent-blue);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-raised-hover);
+    transform: translateY(-3px);
+    box-shadow: -7px -7px 16px rgba(255, 255, 255, 1), 7px 7px 18px rgba(37, 99, 235, 0.28);
+    border-color: rgba(255, 255, 255, 1);
+}
+
+.social-links a:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-pressed-sm);
+}
+
+.social-links a:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 3px;
 }
 
 .social-links a i {
@@ -2037,7 +2048,7 @@ button:focus-visible,
     color: var(--text-muted);
 }
 
-/* Scroll to Top Button */
+/* Scroll to Top Button (PASS-5 Final Micro Fix: Enhanced High-Contrast Visibility) */
 .scroll-top {
     position: fixed;
     bottom: 24px;
@@ -2053,7 +2064,12 @@ button:focus-visible,
     z-index: 99;
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform 0.25s var(--ease-out-quint);
+    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%) !important;
+    box-shadow: -6px -6px 16px rgba(255, 255, 255, 1), 6px 6px 20px rgba(165, 180, 203, 0.45) !important;
+    color: var(--text-primary) !important;
+    border: 2px solid rgba(255, 255, 255, 0.95) !important;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease;
+    cursor: pointer;
 }
 
 .scroll-top.is-visible {
@@ -2062,9 +2078,20 @@ button:focus-visible,
 }
 
 .scroll-top:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-raised-hover);
-    color: var(--accent-blue);
+    transform: translateY(-4px) !important;
+    box-shadow: -8px -8px 20px rgba(255, 255, 255, 1), 8px 8px 24px rgba(37, 99, 235, 0.3) !important;
+    color: var(--accent-blue) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+}
+
+.scroll-top:active {
+    transform: translateY(1px) !important;
+    box-shadow: var(--shadow-pressed-sm) !important;
+}
+
+.scroll-top:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 3px;
 }
 
 @media (max-width: 991px) {
