@@ -1,11 +1,12 @@
 /**
  * NammaVeedu Smart - Global Application Scripts
+ * Premium Motion System & Interactive Application Logic
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('NammaVeedu Smart premium landing page initialized.');
 
-    // 1. Initialize core UI components
+    // 1. Initialize core UI components & Motion System
     initLucideIcons();
     initMobileNavigation();
     initStatsCounter();
@@ -13,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initTestimonialsCarousel();
     initFaqAccordion();
     initScrollToTop();
+    initPageLoadAnimation();
+    initScrollReveal();
+    initScrollSpy();
 });
 
 /**
@@ -77,10 +81,12 @@ function initMobileNavigation() {
                 });
             }
         });
+    });
+
     // Handle mobile CTA button click
     const mobileCta = document.querySelector('.mobile-cta');
     if (mobileCta) {
-        mobileCta.addEventListener('click', (e) => {
+        mobileCta.addEventListener('click', () => {
             const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
             if (isExpanded) {
                 hamburgerBtn.setAttribute('aria-expanded', 'false');
@@ -207,7 +213,7 @@ function initDashboard() {
         }
     };
 
-    // 1. Entrance Fade-in Animation
+    // 1. Entrance Staggered Fade-in Animation
     const entranceObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -621,7 +627,6 @@ function initTestimonialsCarousel() {
     };
 
     const getMaxIndex = () => {
-        // If desktop, 3 fit side by side. Max index should prevent showing blank spaces on the right.
         return isDesktop() ? track.children.length - 3 : track.children.length - 1;
     };
 
@@ -670,7 +675,6 @@ function initTestimonialsCarousel() {
     track.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
     track.addEventListener('mouseleave', startAutoSlide);
 
-    // Resize handler with debounce to prevent calculations during scaling
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
@@ -739,6 +743,123 @@ function initScrollToTop() {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
+        });
+    });
+}
+
+/**
+ * PASS-3 STEP 3: Hero Page Load Animation (Staggered Entrance)
+ */
+function initPageLoadAnimation() {
+    const heroElements = [
+        document.querySelector('.hero-eyebrow'),
+        document.querySelector('.hero-content h1'),
+        document.querySelector('.hero-content p'),
+        document.querySelector('.hero-actions'),
+        document.querySelector('.hero-trust'),
+        document.querySelector('.hero-visual')
+    ];
+
+    heroElements.forEach((el, idx) => {
+        if (!el) return;
+        el.classList.add('hero-entrance-element');
+        setTimeout(() => {
+            el.classList.add('hero-entrance-active');
+        }, 150 + idx * 120);
+    });
+}
+
+/**
+ * PASS-3 STEP 4: Universal Scroll Reveal System
+ */
+function initScrollReveal() {
+    // Check prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+    }
+
+    const revealSelectors = [
+        '.statistics-section h2, .statistics-section p',
+        '.features-section h2, .features-section p',
+        '.dashboard-section h2, .dashboard-section p',
+        '.features-detail-section .eyebrow, .features-detail-section h2, .features-detail-section .section-desc',
+        '.tn-section .eyebrow, .tn-section h2, .tn-section .section-desc',
+        '.timeline-section .eyebrow, .timeline-section h2, .timeline-section .section-desc',
+        '.testimonials-section .eyebrow, .testimonials-section h2, .testimonials-section .section-desc',
+        '.faq-section .eyebrow, .faq-section h2, .faq-section .section-desc',
+        '.stat-card',
+        '.feature-card',
+        '.feature-item',
+        '.lifestyle-wrapper',
+        '.highlight-card',
+        '.benefit-card',
+        '.timeline-visual-card',
+        '.timeline-step',
+        '.testimonial-card',
+        '.faq-item',
+        '.cta-card'
+    ];
+
+    const revealElements = document.querySelectorAll(revealSelectors.join(', '));
+
+    revealElements.forEach(el => {
+        if (!el.classList.contains('reveal-element') && !el.classList.contains('hero-entrance-element')) {
+            el.classList.add('reveal-element');
+        }
+    });
+
+    // Group cards within grids for staggered entrance
+    const grids = document.querySelectorAll('.stats-grid, .features-grid, .tn-benefits-grid, .timeline-grid-list, .carousel-track');
+    grids.forEach(grid => {
+        const children = grid.children;
+        Array.from(children).forEach((child, index) => {
+            const delayClass = `stagger-${(index % 6) + 1}`;
+            child.classList.add(delayClass);
+        });
+    });
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+}
+
+/**
+ * PASS-3 STEP 9: Navigation Scroll Spy & Active State Highlight
+ */
+function initScrollSpy() {
+    const sections = document.querySelectorAll('section[id], footer[id]');
+    const navLinks = document.querySelectorAll('#navMenu a');
+
+    if (sections.length === 0 || navLinks.length === 0) return;
+
+    window.addEventListener('scroll', () => {
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY + 120;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('is-active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('is-active');
+            }
         });
     });
 }

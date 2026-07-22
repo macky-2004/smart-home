@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NAMMAVEEDU SMART - PREMIUM NEUMORPHIC DESIGN SYSTEM (PASS-2 LAYOUT & IMAGES)
+   NAMMAVEEDU SMART - PREMIUM NEUMORPHIC DESIGN SYSTEM (PASS-3 MOTION SYSTEM)
    ========================================================================== */
 
 /* --- 1. Global Variables & Design Tokens --- */
@@ -68,6 +68,11 @@
     --shadow-btn-primary: -6px -6px 16px rgba(255, 255, 255, 0.9), 6px 6px 20px rgba(37, 99, 235, 0.28);
     --shadow-btn-primary-hover: -8px -8px 20px rgba(255, 255, 255, 1), 8px 8px 26px rgba(37, 99, 235, 0.4);
 
+    /* Motion Curves & Easing Functions (PASS-3 Motion System) */
+    --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+
     /* Glass & Border Highlights */
     --border-light: 1px solid rgba(255, 255, 255, 0.85);
     --border-pressed: 1px solid rgba(255, 255, 255, 0.35);
@@ -113,7 +118,7 @@ p {
     letter-spacing: -0.01em;
 }
 
-/* Section Ambient Depth Dividers (Pass-2 Step 6) */
+/* Section Ambient Depth Dividers */
 section {
     position: relative;
 }
@@ -132,7 +137,40 @@ button:focus-visible,
     border-radius: var(--radius-xs);
 }
 
-/* --- 3. Layout Utility & Typography Rhythm --- */
+/* --- 3. PASS-3 MOTION SYSTEM & SCROLL REVEAL UNIFIED RULES --- */
+.hero-entrance-element {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.85s var(--ease-out-quint), transform 0.85s var(--ease-out-quint);
+    will-change: opacity, transform;
+}
+
+.hero-entrance-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-element {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s var(--ease-out-quint), transform 0.8s var(--ease-out-quint);
+    will-change: opacity, transform;
+}
+
+.reveal-element.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger Entrance Delays */
+.stagger-1 { transition-delay: 80ms; }
+.stagger-2 { transition-delay: 160ms; }
+.stagger-3 { transition-delay: 240ms; }
+.stagger-4 { transition-delay: 320ms; }
+.stagger-5 { transition-delay: 400ms; }
+.stagger-6 { transition-delay: 480ms; }
+
+/* --- 4. Layout Utility & Typography Rhythm --- */
 .container {
     max-width: 1280px;
     margin: 0 auto;
@@ -172,13 +210,28 @@ h2 {
     line-height: 1.75;
 }
 
-/* --- 4. Core Neumorphic Card Component System --- */
+/* --- 5. Core Neumorphic Card Component System & Micro Interactions --- */
 .card-raised {
     background: linear-gradient(135deg, var(--elevated-color) 0%, var(--surface-color) 100%);
     box-shadow: var(--shadow-raised-md);
     border-radius: var(--radius-lg);
     border: var(--border-light);
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition: transform 0.35s var(--ease-out-quint), box-shadow 0.35s var(--ease-out-quint), border-color 0.35s ease;
+    will-change: transform, box-shadow;
+}
+
+.card-raised:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-raised-hover);
+    border-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Soft Icon Micro Response inside Cards */
+.card-raised:hover i {
+    transform: scale(1.08) translateY(-2px);
+    color: var(--accent-blue);
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(37, 99, 235, 0.2);
+    transition: transform 0.35s var(--ease-out-quint), color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .card-pressed {
@@ -188,7 +241,7 @@ h2 {
     border: var(--border-pressed);
 }
 
-/* --- 5. Button System (Tactile Neumorphic & Primary Gradient) --- */
+/* --- 6. Button System & Tactile Control Feedback --- */
 .btn-neumorphic {
     padding: 16px 32px;
     border-radius: var(--radius-md);
@@ -200,7 +253,7 @@ h2 {
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: -0.01em;
-    transition: all var(--transition-fast);
+    transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), background 0.25s ease, color 0.25s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -208,10 +261,11 @@ h2 {
     border: var(--border-light);
     text-decoration: none;
     user-select: none;
+    will-change: transform, box-shadow;
 }
 
 .btn-neumorphic:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-raised-hover);
     color: var(--accent-blue);
 }
@@ -237,7 +291,7 @@ h2 {
 .cta-btn:hover,
 .btn-neumorphic.primary:hover {
     box-shadow: var(--shadow-btn-primary-hover) !important;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     color: var(--text-inverse) !important;
 }
 
@@ -259,7 +313,7 @@ h2 {
     color: var(--accent-blue);
 }
 
-/* --- 6. Header Section --- */
+/* --- 7. Header Section & Navigation Indicators --- */
 .header {
     position: fixed;
     top: 0;
@@ -269,13 +323,14 @@ h2 {
     background: rgba(235, 240, 245, 0.92);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition: box-shadow var(--transition-fast), height var(--transition-fast);
+    transition: box-shadow var(--transition-fast), height var(--transition-fast), background var(--transition-fast);
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .header.is-sticky {
     height: 76px;
     box-shadow: 0 8px 24px rgba(165, 180, 203, 0.25);
+    background: rgba(235, 240, 245, 0.96);
 }
 
 .header-container {
@@ -298,6 +353,11 @@ h2 {
     display: flex;
     align-items: center;
     gap: var(--space-8);
+    transition: transform var(--transition-fast);
+}
+
+.logo:hover {
+    transform: scale(1.02);
 }
 
 .logo::before {
@@ -315,18 +375,39 @@ h2 {
     gap: var(--space-32);
 }
 
+/* Nav Link Active & Hover Indicators (PASS-3 Step 9) */
 .nav-menu a {
     text-decoration: none;
     color: var(--text-secondary);
     font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.95rem;
-    transition: color var(--transition-fast);
+    transition: color 0.25s ease;
     padding: var(--space-8) var(--space-12);
     border-radius: var(--radius-xs);
+    position: relative;
 }
 
-.nav-menu a:hover {
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    width: 0;
+    height: 2.5px;
+    background: var(--accent-blue);
+    border-radius: 2px;
+    transition: width 0.3s var(--ease-out-quint), left 0.3s var(--ease-out-quint);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.is-active::after {
+    width: 60%;
+    left: 20%;
+}
+
+.nav-menu a:hover,
+.nav-menu a.is-active {
     color: var(--accent-blue);
 }
 
@@ -436,7 +517,7 @@ h2 {
     }
 }
 
-/* --- 7. Hero Section --- */
+/* --- 8. Hero Section --- */
 .hero {
     padding: 160px 0 100px 0;
     min-height: 100vh;
@@ -511,6 +592,11 @@ h1 {
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-raised-sm);
     border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.25s var(--ease-out-quint);
+}
+
+.hero-trust span:hover {
+    transform: translateY(-2px);
 }
 
 .hero-trust span::before {
@@ -530,7 +616,7 @@ h1 {
     }
 }
 
-/* Image Frames System (Pass-2 Step 2 & Step 6) */
+/* Image Frames System & Hover Response (PASS-3 Step 7) */
 .hero-image-wrapper {
     width: 100%;
     height: 480px;
@@ -546,11 +632,12 @@ h1 {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
+    transition: transform 0.7s var(--ease-out-quint);
+    will-change: transform;
 }
 
 .hero-image-wrapper:hover img {
-    transform: scale(1.03);
+    transform: scale(1.025);
 }
 
 .dashboard-preview {
@@ -580,6 +667,11 @@ h1 {
     font-weight: 600;
     color: var(--text-primary);
     border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: transform 0.25s var(--ease-out-quint);
+}
+
+.hero-widget:hover {
+    transform: translateY(-2px);
 }
 
 .hero-widget i {
@@ -649,7 +741,7 @@ h1 {
     }
 }
 
-/* --- 8. Statistics Section --- */
+/* --- 9. Statistics Section --- */
 .statistics-section {
     padding: var(--space-120) 0;
     background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(235, 240, 245, 0) 70%);
@@ -672,7 +764,6 @@ h1 {
     align-items: stretch;
 }
 
-/* Card Arrangement & Equal Heights (Pass-2 Step 5) */
 .stat-card {
     padding: var(--space-36) var(--space-28);
     text-align: center;
@@ -697,6 +788,7 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.35s var(--ease-out-quint), color 0.35s ease;
 }
 
 .stat-card h3 {
@@ -739,7 +831,7 @@ h1 {
     }
 }
 
-/* --- 9. Why Choose Us Section --- */
+/* --- 10. Why Choose Us Section --- */
 .features-section {
     padding: var(--space-120) 0;
 }
@@ -771,7 +863,6 @@ h1 {
     box-shadow: var(--shadow-raised-hover);
 }
 
-/* Icon System Well (#8) */
 .feature-card i {
     color: var(--accent-blue);
     margin-bottom: var(--space-20);
@@ -785,6 +876,7 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.35s var(--ease-out-quint), color 0.35s ease;
 }
 
 .feature-card .label {
@@ -823,7 +915,7 @@ h1 {
     }
 }
 
-/* --- 10. Dashboard Section --- */
+/* --- 11. Dashboard Section --- */
 .dashboard-section {
     padding: var(--space-120) 0;
     background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.5) 0%, rgba(235, 240, 245, 0) 60%);
@@ -849,7 +941,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition: transform 0.35s var(--ease-out-quint), box-shadow 0.35s var(--ease-out-quint);
 }
 
 .dash-widget:hover {
@@ -877,7 +969,7 @@ h1 {
     box-shadow: var(--shadow-pressed-sm);
     border: 1px solid rgba(255, 255, 255, 0.5);
     margin-bottom: var(--space-16);
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s var(--ease-out-quint);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -886,7 +978,7 @@ h1 {
 .interactive-widget.is-active-widget .widget-icon,
 .interactive-widget:hover .widget-icon {
     color: var(--accent-blue);
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
 .status-safe .widget-icon {
@@ -1008,7 +1100,7 @@ h1 {
     }
 }
 
-/* --- 11. Features Detail Section --- */
+/* --- 12. Features Detail Section --- */
 .features-detail-section {
     padding: var(--space-120) 0;
 }
@@ -1032,7 +1124,6 @@ h1 {
     flex: 1;
 }
 
-/* Image Frame System (Pass-2 Step 2 & Step 6) */
 .feature-visual {
     flex: 1;
     border-radius: var(--radius-xl);
@@ -1046,11 +1137,12 @@ h1 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform 0.7s var(--ease-out-quint);
+    will-change: transform;
 }
 
 .feature-visual:hover img {
-    transform: scale(1.03);
+    transform: scale(1.025);
 }
 
 .badge {
@@ -1143,7 +1235,7 @@ h1 {
     }
 }
 
-/* --- 12. Tamil Nadu Homes Section --- */
+/* --- 13. Tamil Nadu Homes Section --- */
 .tn-section {
     padding: var(--space-120) 0;
     background: radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.45) 0%, rgba(235, 240, 245, 0) 65%);
@@ -1175,11 +1267,12 @@ h1 {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
+    transition: transform 0.7s var(--ease-out-quint);
+    will-change: transform;
 }
 
 .lifestyle-wrapper:hover img {
-    transform: scale(1.03);
+    transform: scale(1.025);
 }
 
 .tn-intro-copy {
@@ -1233,6 +1326,7 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.35s var(--ease-out-quint), color 0.35s ease;
 }
 
 .benefit-card h4 {
@@ -1295,7 +1389,7 @@ h1 {
     }
 }
 
-/* --- 13. Timeline Section --- */
+/* --- 14. Timeline Section --- */
 .timeline-section {
     padding: var(--space-120) 0;
 }
@@ -1323,6 +1417,12 @@ h1 {
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.7s var(--ease-out-quint);
+    will-change: transform;
+}
+
+.timeline-visual-card:hover img {
+    transform: scale(1.025);
 }
 
 .timeline-visual-overlay {
@@ -1391,6 +1491,11 @@ h1 {
     justify-content: center;
     box-shadow: var(--shadow-pressed-sm);
     border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: transform 0.25s var(--ease-out-quint);
+}
+
+.timeline-step:hover .step-number {
+    transform: scale(1.08);
 }
 
 .timeline-step i {
@@ -1405,6 +1510,7 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.35s var(--ease-out-quint), color 0.35s ease;
 }
 
 .timeline-step h3 {
@@ -1438,7 +1544,7 @@ h1 {
     }
 }
 
-/* --- 14. Testimonials Section --- */
+/* --- 15. Testimonials Section --- */
 .testimonials-section {
     padding: var(--space-120) 0;
     overflow: hidden;
@@ -1485,6 +1591,11 @@ h1 {
     border: 3px solid rgba(255, 255, 255, 0.95);
     object-fit: cover;
     box-shadow: var(--shadow-raised-sm);
+    transition: transform 0.35s var(--ease-out-quint);
+}
+
+.testimonial-card:hover img {
+    transform: scale(1.05);
 }
 
 .testimonial-card h4 {
@@ -1548,7 +1659,7 @@ h1 {
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    transition: all var(--transition-fast);
+    transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease;
     color: var(--text-primary);
 }
 
@@ -1560,6 +1671,7 @@ h1 {
 
 .carousel-controls button:active {
     box-shadow: var(--shadow-pressed-sm);
+    transform: translateY(1px);
 }
 
 @media (max-width: 991px) {
@@ -1569,7 +1681,7 @@ h1 {
     }
 }
 
-/* --- 15. FAQ Section --- */
+/* --- 16. FAQ Section --- */
 .faq-section {
     padding: var(--space-120) 0;
 }
@@ -1613,7 +1725,7 @@ h1 {
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s ease;
     padding: 0 var(--space-32);
 }
 
@@ -1625,7 +1737,7 @@ h1 {
 }
 
 .faq-question i {
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease;
     color: var(--text-secondary);
     width: 22px;
     height: 22px;
@@ -1637,7 +1749,7 @@ h1 {
     color: var(--accent-blue);
 }
 
-/* --- 16. Final CTA Section --- */
+/* --- 17. Final CTA Section --- */
 .final-cta-section {
     padding: var(--space-120) 0;
     background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.6) 0%, rgba(235, 240, 245, 0) 70%);
@@ -1697,6 +1809,11 @@ h1 {
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-raised-sm);
     border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.25s var(--ease-out-quint);
+}
+
+.cta-trust-points span:hover {
+    transform: translateY(-2px);
 }
 
 .cta-note {
@@ -1722,7 +1839,7 @@ h1 {
     }
 }
 
-/* --- 17. Footer --- */
+/* --- 18. Footer & Scroll to Top --- */
 .footer {
     padding: var(--space-96) 0 var(--space-40);
     background: var(--bg-color);
@@ -1782,7 +1899,7 @@ h1 {
     text-decoration: none;
     font-size: 0.98rem;
     font-weight: 500;
-    transition: color var(--transition-fast);
+    transition: color 0.25s ease;
 }
 
 .footer-col li a:hover {
@@ -1839,7 +1956,7 @@ h1 {
     background: linear-gradient(135deg, var(--elevated-color), var(--surface-color));
     box-shadow: var(--shadow-raised-sm);
     color: var(--text-secondary);
-    transition: all var(--transition-fast);
+    transition: transform 0.25s var(--ease-out-quint), box-shadow 0.25s var(--ease-out-quint), color 0.25s ease;
     text-decoration: none;
     border: var(--border-light);
 }
@@ -1883,7 +2000,7 @@ h1 {
     z-index: 99;
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform var(--transition-fast);
+    transition: opacity var(--transition-normal), visibility var(--transition-normal), transform 0.25s var(--ease-out-quint);
 }
 
 .scroll-top.is-visible {
@@ -1893,6 +2010,8 @@ h1 {
 
 .scroll-top:hover {
     transform: translateY(-3px);
+    box-shadow: var(--shadow-raised-hover);
+    color: var(--accent-blue);
 }
 
 @media (max-width: 991px) {
@@ -1905,5 +2024,21 @@ h1 {
 @media (max-width: 576px) {
     .footer-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* --- 19. ACCESSIBILITY & PREFERS-REDUCED-MOTION (PASS-3 STEP 12) --- */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-entrance-element,
+    .reveal-element {
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
